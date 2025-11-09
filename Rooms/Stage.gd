@@ -6,6 +6,7 @@ onready var block_map = $BlockMap
 onready var player = $Prime
 
 func _ready():
+	randomize()
 	spawn_wave()
 
 func spawn_enemy(tile):
@@ -14,13 +15,21 @@ func spawn_enemy(tile):
 	enemy.target=player
 	add_child(enemy)
 
+func get_anchor()->int:
+	return ((wave-1) * 64) + 1
+
 func spawn_wave():
 	var spawn_list:=[]
 	for n in 20:
 		var lane:=int(n / 5) + 1
-		var anchor:=((wave-1) * 64) + 1
+		var anchor=get_anchor()
 		var spawn=Vector2(anchor+(randi()%30),(lane*4) - 1)
 		while spawn_list.has(spawn):
 			spawn=Vector2(anchor+(randi()%30),(lane*4) - 1)
 		spawn_list.append(spawn)
 		spawn_enemy(spawn)
+
+func _process(_delta):
+	if Input.is_action_just_pressed("grab"):
+		var prime_pos=block_map.world_to_map(player.position)
+		block_map.make_hall(Vector2(get_anchor()+30,0))
