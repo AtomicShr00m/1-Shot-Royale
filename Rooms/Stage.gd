@@ -4,6 +4,7 @@ var wave:=1
 onready var blueScn = preload("res://Objects/Enemies/Blue.tscn")
 onready var block_map = $BlockMap
 onready var player = $Prime
+onready var game_manager = $GameManager
 
 func _ready():
 	randomize()
@@ -15,15 +16,13 @@ func spawn_enemy(tile):
 	enemy.get_node("Sprite").scale.x=[-1,1].pick_random()
 	enemy.target=player
 	add_child(enemy)
-
-func get_anchor()->int:
-	return ((wave-1) * 64) + 1
+	enemy.connect("dead",game_manager,"enemy_killed")
 
 func spawn_wave():
 	var spawn_list:=[]
 	for n in 20:
 		var lane:=int(n / 5) + 1
-		var anchor=get_anchor()
+		var anchor=((wave-1) * 64) + 1
 		var spawn=Vector2(anchor+(randi()%30),(lane*4) - 1)
 		while spawn_list.has(spawn):
 			spawn=Vector2(anchor+(randi()%30),(lane*4) - 1)

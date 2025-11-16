@@ -65,6 +65,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite/Head:position")
 tracks/0/interp = 1
@@ -216,6 +217,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=4]
 resource_name = "Walk"
 length = 0.4
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite/LegL:position")
 tracks/0/interp = 1

@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal dead
 const SPEED=100
 const ACCEL=600
 const FRICTION=8
@@ -19,6 +20,7 @@ onready var bullet_spawn = $Sprite/Head/ArmR/BulletSpawn
 onready var bulletScn = preload("res://Objects/Enemies/Bullets/BulletBlue.tscn")
 
 func hit():
+	emit_signal("dead")
 	queue_free()
 
 func _ready():
